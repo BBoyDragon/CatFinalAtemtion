@@ -25,8 +25,8 @@ public class Main {
         CatService catService = new CatServiceImpl(catRepository, catOwnerRepository);
         OwnerService ownerService = new CatOwnerServiceImpl(catOwnerRepository);
 
-//        ownerService.AddNewOwner("AnanasAnanas", "2004-11-22");
-//        catService.AddNewCat("AbricosAbricos","2004-05-23","black","AnanasAnanas");
+        ownerService.AddNewOwner("AnanasAnanas", "2004-11-22");
+        catService.AddNewCat("A","2004-05-23","black","AnanasAnanas");
         catService.MakeCatsBeFriends("ananas","abricos","AnanasAnanas","AbricosAbricos");
 
         session.close();

@@ -17,6 +17,7 @@ dependencies {
 
     compileOnly ("org.projectlombok:lombok:1.18.22")
     annotationProcessor ("org.projectlombok:lombok:1.18.22")
+    testImplementation ("org.mockito:mockito-core:3.11.2")
 
     implementation ("org.postgresql:postgresql:42.3.1")
     implementation(project(":Application"))
