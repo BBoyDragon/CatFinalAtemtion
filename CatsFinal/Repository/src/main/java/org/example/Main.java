@@ -1,17 +1,42 @@
 package org.example;
 
+import org.example.DTOSystem.CatDTOConvertor;
+import org.example.DTOSystem.CatOwnerDTOConvertor;
+import org.example.Repository.CatOwnerRepositoryImpl;
+import org.example.Repository.CatRepositoryImpl;
+import org.example.RepositoryAbstractions.CatOwnerRepository;
+import org.example.RepositoryAbstractions.CatRepository;
+import org.example.ServiceAbstractions.CatService;
+import org.example.ServiceAbstractions.OwnerService;
+import org.example.Services.CatOwnerServiceImpl;
+import org.example.Services.CatServiceImpl;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        CatRepository catRepository = new CatRepositoryImpl(sessionFactory, session);
+        CatOwnerRepository catOwnerRepository = new CatOwnerRepositoryImpl(sessionFactory,session);
+
+        CatDTOConvertor catDTOConvertor = new CatDTOConvertor();
+        CatOwnerDTOConvertor catOwnerDTOConvertor = new CatOwnerDTOConvertor();
+
+        CatService catService = new CatServiceImpl(catRepository, catOwnerRepository, session,catDTOConvertor);
+        OwnerService ownerService = new CatOwnerServiceImpl(catOwnerRepository,session, catOwnerDTOConvertor);
+
+        ownerService.AddNewOwner("Abr", "2004-11-22");
+        ownerService.AddNewOwner("Ana", "2004-11-22");
+        catService.AddNewCat("abr","2004-05-23","black","Abr");
+        catService.AddNewCat("ana","2004-05-23","black","Ana");
+        //catService.MakeCatsBeFriends("AnanasAnanas","ananas","AbricosAbricos","abricos");
+
+        session.close();
+        sessionFactory.close();
     }
 }

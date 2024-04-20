@@ -1,6 +1,8 @@
 plugins {
     id("java")
+    id("org.springframework.boot") version "3.2.4"
 }
+apply(plugin = "io.spring.dependency-management")
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -14,6 +16,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("org.hibernate.orm:hibernate-core:6.4.4.Final")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     compileOnly ("org.projectlombok:lombok:1.18.22")
     annotationProcessor ("org.projectlombok:lombok:1.18.22")

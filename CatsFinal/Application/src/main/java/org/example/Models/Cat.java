@@ -29,12 +29,14 @@ public class Cat {
     @Column(name = "color")
     private Color color;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private CatOwner catOwner;
 
-    @ManyToMany(cascade= CascadeType.ALL)
-    @Column(name = "CatFriends")
+    @ManyToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "cats_cat_friends",
+            joinColumns = @JoinColumn(name = "cat_id"),
+            inverseJoinColumns = @JoinColumn(name = "catfriends_id"))
     private List<Cat> catFriends;
 
     public Cat(String name, LocalDate birthday, Color color, CatOwner catOwner){

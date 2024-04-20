@@ -1,7 +1,8 @@
 plugins {
     id("java")
+    id("org.springframework.boot") version "3.2.4"
 }
-
+apply(plugin = "io.spring.dependency-management")
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
@@ -14,6 +15,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("org.hibernate.orm:hibernate-core:6.4.4.Final")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
     compileOnly ("org.projectlombok:lombok:1.18.22")
     annotationProcessor ("org.projectlombok:lombok:1.18.22")
@@ -22,6 +24,14 @@ dependencies {
 
     implementation(project(":Application"))
     implementation(project(":Repository"))
+
+    testImplementation("org.springframework.boot:spring-boot-test:3.2.2")
+    testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:3.2.2")
+
+    testImplementation ("com.h2database:h2:1.4.200")
+    implementation("junit:junit:4.13.1")
+
+    testImplementation("org.springframework:spring-test:6.1.3")
 }
 
 tasks.test {

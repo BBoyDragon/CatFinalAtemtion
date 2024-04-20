@@ -15,18 +15,14 @@ public class CatOwnerRepositoryImpl implements CatOwnerRepository {
     }
     @Override
     public void WriteCatOwner(CatOwner catOwner) {
-        Transaction transaction = session.beginTransaction();
         session.save(catOwner);
-        transaction.commit();
     }
 
     @Override
     public CatOwner ReadCatOwner(String ownerName) {
-        session.beginTransaction();
         var result = session.createQuery("select owner from CatOwner owner where owner.name = :ownerName", CatOwner.class)
                 .setParameter("ownerName", ownerName)
                 .getSingleResult();
-        session.getTransaction().commit();
         return result;
     }
 }
