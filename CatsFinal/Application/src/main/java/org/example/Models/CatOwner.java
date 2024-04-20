@@ -23,7 +23,7 @@ public class CatOwner {
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "catOwner")
     @Column(name = "Cat")
     private List<Cat> cats;
     public CatOwner(String name, LocalDate birthday){

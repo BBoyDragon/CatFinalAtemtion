@@ -11,26 +11,18 @@ import org.example.Services.CatServiceImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
 
-        CatRepository catRepository = new CatRepositoryImpl(sessionFactory, session);
-        CatOwnerRepository catOwnerRepository = new CatOwnerRepositoryImpl(sessionFactory,session);
-
-        CatService catService = new CatServiceImpl(catRepository, catOwnerRepository);
-        OwnerService ownerService = new CatOwnerServiceImpl(catOwnerRepository);
-
-        ownerService.AddNewOwner("AnanasAnanas", "2004-11-22");
-        catService.AddNewCat("A","2004-05-23","black","AnanasAnanas");
-        catService.MakeCatsBeFriends("ananas","abricos","AnanasAnanas","AbricosAbricos");
-
-        session.close();
-        sessionFactory.close();
+        ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
 
     }
 }

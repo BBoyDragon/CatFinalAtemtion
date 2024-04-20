@@ -17,14 +17,11 @@ public class CatRepositoryImpl implements CatRepository {
 
     @Override
     public void WriteCat(Cat cat) {
-        Transaction transaction = session.beginTransaction();
         session.save(cat);
-        transaction.commit();
     }
 
     @Override
     public Cat ReadCat(String ownerName, String catName) {
-        session.beginTransaction();
         String hql = "SELECT c FROM Cat c " +
                 "JOIN c.catOwner owner " +
                 "WHERE c.name = :catName " +
@@ -34,7 +31,6 @@ public class CatRepositoryImpl implements CatRepository {
                 .setParameter("catName", catName)
                 .setParameter("ownerName", ownerName)
                 .getSingleResult();
-        session.getTransaction().commit();
         return result;
     }
 }
