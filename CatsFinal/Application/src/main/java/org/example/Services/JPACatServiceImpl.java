@@ -28,7 +28,7 @@ public class JPACatServiceImpl implements JPACatService {
 
     @Override
     public CatDTO AddNewCat(CatDTO catDTO) {
-        CatOwner owner = jpaCatOwnerRepository.getReferenceById(catDTO.getCatOwner_id());
+        CatOwner owner = jpaCatOwnerRepository.getById(catDTO.getCatOwner_id());
         Cat cat  = new Cat(catDTO.getName(),catDTO.getBirthday(),catDTO.getColor(),owner);
         owner.getCats().add(cat);
         jpaCatOwnerRepository.save(owner);

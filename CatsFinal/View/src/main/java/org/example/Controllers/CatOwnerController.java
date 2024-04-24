@@ -1,18 +1,30 @@
 package org.example.Controllers;
 
 import org.example.DTOSystem.CatOwnerDTO;
+import org.example.DTOSystem.UserDTO;
 import org.example.ServiceAbstractions.JPAOwnerService;
+import org.example.Security.CustomUserDetailsService;
+import org.example.ServiceAbstractions.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 public class CatOwnerController {
     @Autowired
     private JPAOwnerService jpaOwnerService;
+    @Autowired
+    private UserService userService;
     @PostMapping("/CatOwner")
-    public CatOwnerDTO saveCatOwner(@RequestBody CatOwnerDTO catOwnerDTO)
+    public CatOwnerDTO saveCatOwner(@RequestBody CatOwnerDTO catOwnerDTO, @RequestParam String password, @RequestParam String role)
     {
-        return jpaOwnerService.AddNewOwner(catOwnerDTO);
+        UserDTO userDTO = new UserDTO(catOwnerDTO.getId(), catOwnerDTO.getName(),password, Set.of(role), catOwnerDTO.getId());
+        CatOwnerDTO newCatOwnerDto = jpaOwnerService.AddNewOwner(catOwnerDTO);
+        userDTO.setCatOwner_id(newCatOwnerDto.getId());
+        userService.SaveUser(userDTO);
+        return newCatOwnerDto;
     }
 
     // Read operation
@@ -31,7 +43,7 @@ public class CatOwnerController {
     }
 
     // Delete operation
-    @DeleteMapping("/CatOwner/")
+    @DeleteMapping("/CatOwner")
     public String deleteCatOwnerByName(@RequestParam String catOwnerName)
     {
         jpaOwnerService.DeleteOwner(catOwnerName);

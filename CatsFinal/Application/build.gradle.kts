@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("org.springframework.boot") version "3.2.4"
+    id("org.springframework.boot") version "3.1.6"
 
 }
 apply(plugin = "io.spring.dependency-management")
@@ -26,6 +26,13 @@ dependencies {
     annotationProcessor ("org.projectlombok:lombok:1.18.22")
 
     implementation ("org.postgresql:postgresql:42.3.1")
+
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.security:spring-security-test")
 }
 
 tasks.test {

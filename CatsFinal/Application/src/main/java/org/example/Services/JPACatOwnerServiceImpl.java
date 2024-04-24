@@ -26,6 +26,7 @@ public class JPACatOwnerServiceImpl implements JPAOwnerService {
     public CatOwnerDTO AddNewOwner(CatOwnerDTO catOwnerDTO) {
         CatOwner owner = new CatOwner(catOwnerDTO.getName(), catOwnerDTO.getBirthday());
         jpaCatOwnerRepository.save(owner);
+        catOwnerDTO.setId(jpaCatOwnerRepository.findCatOwnerByName(owner.getName()).getId());
         return catOwnerDTO;
     }
 
