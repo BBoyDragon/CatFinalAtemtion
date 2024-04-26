@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -18,9 +20,9 @@ public class CatOwnerController {
     @Autowired
     private UserService userService;
     @PostMapping("/CatOwner")
-    public CatOwnerDTO saveCatOwner(@RequestBody CatOwnerDTO catOwnerDTO, @RequestParam String password, @RequestParam String role)
+    public CatOwnerDTO saveCatOwner(@RequestBody CatOwnerDTO catOwnerDTO, @RequestParam String password, @RequestParam ArrayList<String> role)
     {
-        UserDTO userDTO = new UserDTO(catOwnerDTO.getId(), catOwnerDTO.getName(),password, Set.of(role), catOwnerDTO.getId());
+        UserDTO userDTO = new UserDTO(catOwnerDTO.getId(), catOwnerDTO.getName(),password,new HashSet<>(role), catOwnerDTO.getId());
         CatOwnerDTO newCatOwnerDto = jpaOwnerService.AddNewOwner(catOwnerDTO);
         userDTO.setCatOwner_id(newCatOwnerDto.getId());
         userService.SaveUser(userDTO);
