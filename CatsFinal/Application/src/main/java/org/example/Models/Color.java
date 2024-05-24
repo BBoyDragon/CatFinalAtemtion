@@ -1,5 +1,7 @@
 package org.example.Models;
 
 public enum Color {
-    black
+    black,
+    red,
+    white
 }

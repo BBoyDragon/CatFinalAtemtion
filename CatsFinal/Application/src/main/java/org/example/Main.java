@@ -12,6 +12,8 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -20,10 +22,9 @@ import java.time.LocalDate;
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
-
-        JPAOwnerService jpaCatOwnerService = context.getBean(JPACatOwnerServiceImpl.class);
-        JPACatService jpaCatService =context.getBean(JPACatService.class);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.out.println(passwordEncoder.encode("ananas"));
+        //$2a$10$iahdSK9mBHrer9vjEbJnuuD7Z1jDXytfqF59F1n5nu1TFvYmo15IC
         //jpaCatOwnerService.AddNewOwner("ananas","2004-11-22");
         //CatOwner owner = jpaCatOwnerService.GetOwner("AnanasAnanas");
         //Cat cat = jpaCatService.GetCat("AnanasAnanas","ananas");

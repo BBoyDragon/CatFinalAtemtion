@@ -32,6 +32,8 @@ dependencies {
     implementation("junit:junit:4.13.1")
 
     testImplementation("org.springframework:spring-test:6.1.3")
+
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.test {

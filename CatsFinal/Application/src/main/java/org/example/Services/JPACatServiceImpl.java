@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JPACatServiceImpl implements JPACatService {
@@ -28,10 +31,10 @@ public class JPACatServiceImpl implements JPACatService {
 
     @Override
     public CatDTO AddNewCat(CatDTO catDTO) {
-        CatOwner owner = jpaCatOwnerRepository.getReferenceById(catDTO.getCatOwner_id());
+        CatOwner owner = jpaCatOwnerRepository.getById(catDTO.getCatOwner_id());
         Cat cat  = new Cat(catDTO.getName(),catDTO.getBirthday(),catDTO.getColor(),owner);
         owner.getCats().add(cat);
-        jpaCatOwnerRepository.save(owner);
+        //jpaCatOwnerRepository.save(owner);
         jpaCatRepository.save(cat);
         return catDTO;
     }
@@ -64,5 +67,19 @@ public class JPACatServiceImpl implements JPACatService {
         cat1.setColor(catDTO.getColor());
         jpaCatRepository.save(cat1);
         return catDTO;
+    }
+
+    @Override
+    public List<CatDTO> GetCatsByColor(Color color) {
+        List<Cat> cats = new ArrayList<Cat>();
+        cats= jpaCatRepository.findCatsByColor(color);
+        return cats.stream().map(catDTOConvertor::Convert).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CatDTO> GetCatsByColorAndUser(Color color, String ownerName) {
+        List<Cat> cats = new ArrayList<Cat>();
+        cats= jpaCatRepository.findCatsByColorAndCatOwnerName(color,ownerName);
+        return cats.stream().map(catDTOConvertor::Convert).collect(Collectors.toList());
     }
 }
